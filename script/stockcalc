@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+
+BEGIN {
+    sub _verify_module {
+        my $module_name = shift;
+        eval("use $module_name");
+        die "Module $module_name is required to run this script. Please install first." if ($@);
+    }
+    _verify_module("FindBin");
+    _verify_module("File::Spec");
+    _verify_module("Getopt::Long");
+    _verify_module("GD::Graph::lines");
+}
+
+use strict;
+use warnings;
+use 5.020;
+
+use FindBin;
+use File::Spec;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
+
+use Stockcalc::Core::Runner;
+
+my $runner = Stockcalc::Core::Runner->new();
+$runner->run();
